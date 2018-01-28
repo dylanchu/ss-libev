@@ -1,15 +1,7 @@
-#
-# Dockerfile for shadowsocks-libev
-#
-
 FROM alpine
 
 ARG SS_VER=3.1.3
 ARG SS_URL=https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$SS_VER/shadowsocks-libev-$SS_VER.tar.gz
-
-ARG TZ='Asia/Shanghai'
-
-ENV TZ $TZ
 
 RUN set -ex && \
     apk add --no-cache --virtual .build-deps \
@@ -39,7 +31,5 @@ RUN set -ex && \
     apk del .build-deps && \
     rm -rf /tmp/* && \
     apk add --no-cache tzdata && \
-    echo $TZ > /etc/timezone && \
-    cp -f /usr/share/zoneinfo/$TZ /etc/localtime && \
-    apk del tzdata
+    cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 
 
